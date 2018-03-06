@@ -25,9 +25,29 @@ public class MineAdapter extends RecyclerView.Adapter<MineAdapter.MineViewHolder
 
     private List<String> list;
 
+    private boolean edit = false;
+
     public MineAdapter(Context context, List<String> list) {
         this.context = context;
         this.list = list;
+    }
+
+    public List<String> getList() {
+        return list;
+    }
+
+    /**
+     * 设置是否编辑
+     *
+     * @param edit
+     */
+    public void setEditable(boolean edit) {
+        this.edit = edit;
+        notifyDataSetChanged();
+    }
+
+    public boolean isEdit() {
+        return edit;
     }
 
     @Override
@@ -37,10 +57,23 @@ public class MineAdapter extends RecyclerView.Adapter<MineAdapter.MineViewHolder
     }
 
     @Override
-    public void onBindViewHolder(MineViewHolder holder, int position) {
+    public void onBindViewHolder(MineViewHolder holder, final int position) {
 
         holder.textView.setText(list.get(position));
-        holder.ivClose.setVisibility(View.GONE);
+
+        if (edit) {
+            holder.ivClose.setVisibility(View.VISIBLE);
+        } else {
+            holder.ivClose.setVisibility(View.GONE);
+        }
+
+        holder.ivClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                list.remove(position);
+                notifyItemRemoved(position);
+            }
+        });
     }
 
     @Override

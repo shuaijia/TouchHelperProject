@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.MotionEvent;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -27,6 +29,10 @@ public class MainActivity extends AppCompatActivity {
 
     private MineAdapter mineAdapter;
 
+    private ItemTouchHelper itemTouchHelper;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,8 +44,13 @@ public class MainActivity extends AppCompatActivity {
         mineAdapter = new MineAdapter(this, daos);
         GridLayoutManager gm = new GridLayoutManager(this, 4);
 
+        itemTouchHelper = new ItemTouchHelper(new MineTouchCallback(mineAdapter));
+        itemTouchHelper.attachToRecyclerView(rvMine);
+
         rvMine.setLayoutManager(gm);
         rvMine.setAdapter(mineAdapter);
+
+
     }
 
     /**
@@ -54,6 +65,14 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.tv_edit)
     public void onViewClicked() {
 
+        if(mineAdapter.isEdit()){
+            mineAdapter.setEditable(false);
+            tvEdit.setText("编辑");
+        }else{
+            mineAdapter.setEditable(true);
+            tvEdit.setText("完成");
+
+        }
 
     }
 }
