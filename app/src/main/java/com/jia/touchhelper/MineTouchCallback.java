@@ -8,7 +8,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import java.util.Collections;
 
 /**
- * Description:
+ * Description: 触摸控制器
  * Created by jia on 2018/3/6.
  * 人之所以能，是相信能
  */
@@ -89,5 +89,4 @@ public class MineTouchCallback extends ItemTouchHelper.Callback {
         super.clearView(recyclerView, viewHolder);
         viewHolder.itemView.setBackgroundColor(0);
     }
-
 }
